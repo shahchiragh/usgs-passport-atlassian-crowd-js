@@ -30,6 +30,7 @@ export default class extends Strategy {
 	}
 
 	async authenticate(req) {
+		console.info('********* AUTHENTICATING *************')
 		const self = this;
 
 		try {
@@ -62,6 +63,8 @@ export default class extends Strategy {
 		}
 
 		function getToken() {
+			console.info('********* GET TOKEN *************')
+			console.info(req.headers.cookie)
 			if (req.headers.cookie) {
 				const cookie = req.headers.cookie
 					.split(/;/)
@@ -70,8 +73,9 @@ export default class extends Strategy {
 						return {name, value};
 					})
 					.find(({name}) => name === self._ssoCookie);
-
+				console.info(cookie)
 				if (cookie) {
+					console.info('* COOKIE VALUE: ' + cookie.value)
 					return cookie.value;
 				}
 			}
